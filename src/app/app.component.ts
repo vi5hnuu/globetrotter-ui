@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AvatarComponent} from "./components/avatar/avatar.component";
 
 @Component({
   selector: 'app-root',
