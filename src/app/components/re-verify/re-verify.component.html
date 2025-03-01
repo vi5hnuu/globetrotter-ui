@@ -1,0 +1,19 @@
+<mat-card class="p-8 flex items-center justify-center gap-4 rounded-md overflow-hidden">
+  <gt-avatar seed="verify" class="flex rounded-full size-16 md:size-24 overflow-hidden shrink-0"></gt-avatar>
+  <form class="flex flex-col">
+    <mat-form-field  appearance="outline">
+      <mat-label>username/Email</mat-label>
+      <input [formControl]="email" matInput placeholder="xyz@gmail.com">
+      <span matSuffix class="material-symbols-outlined pr-4">email</span>
+    </mat-form-field>
+
+    <div class="flex items-center justify-end gap-8">
+      <button [disabled]="reverifyStatus?.isLoading || email.invalid || email.pristine" (click)="onReVerify()" mat-stroked-button color="primary">
+        <div class="flex items-center gap-3">
+          Send Verification Link
+          <mat-spinner *ngIf="reverifyStatus?.isLoading" color="accent" [diameter]="16" class="animate-fade-in"></mat-spinner>
+        </div>
+      </button>
+    </div>
+  </form>
+</mat-card>
