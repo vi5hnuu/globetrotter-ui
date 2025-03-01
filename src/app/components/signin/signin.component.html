@@ -1,1 +1,23 @@
-<p>signin works!</p>
+<mat-card class="p-8 rounded-md overflow-hidden">
+  <form [formGroup]="signinForm" class="flex flex-col">
+    <mat-form-field  appearance="outline">
+      <mat-label>username/Email</mat-label>
+      <input formControlName="usernameEmail" matInput placeholder="kvi5hnu">
+      <span matSuffix class="material-symbols-outlined pr-4">tag</span>
+    </mat-form-field>
+
+    <mat-form-field  appearance="outline">
+      <mat-label>Password</mat-label>
+      <input formControlName="password" matInput placeholder="password">
+      <span matSuffix class="material-symbols-outlined pr-4">tag</span>
+    </mat-form-field>
+    <div class="flex items-center justify-end gap-8">
+      <button [disabled]="signinStatus?.isLoading || !signinForm.valid || signinForm.pristine" (click)="login()" mat-flat-button color="primary">
+        <div class="flex items-center gap-3">
+          Sign-In
+          <mat-spinner *ngIf="signinStatus?.isLoading" color="accent" [diameter]="16" class="animate-fade-in"></mat-spinner>
+        </div>
+      </button>
+    </div>
+  </form>
+</mat-card>

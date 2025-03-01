@@ -9,6 +9,7 @@ import {AuthService} from "./services/auth-service/auth.service";
 import {UtilityService} from "./services/utility-service/utility.service";
 import {HttpClientModule} from "@angular/common/http";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     BrowserAnimationsModule,
     RouterModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers: [AuthService,UtilityService],
   bootstrap: [AppComponent]

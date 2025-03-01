@@ -4,6 +4,7 @@ import {ComponentType} from "@angular/cdk/overlay";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {SnackbarComponent} from "../../components/snackbar/snackbar.component";
 import {SnackbarData} from "../../modals/snackbar-data";
+import {DialogData} from "../../models/dialog-data";
 
 @Injectable()
 export class UtilityService {
@@ -12,7 +13,7 @@ export class UtilityService {
               private dialog: MatDialog,
               private snackbar: MatSnackBar) { }
 
-  openDialogModel<T, M = any, D = any>(component: ComponentType<T> | TemplateRef<T>, config: MatDialogConfig & { data?: { title?: string } } = {}) {
+  openDialogModel<T, M = any, D = any>(component: ComponentType<T> | TemplateRef<T>, config: MatDialogConfig & { data?: DialogData } = {}) {
     return this.dialog.open<T, M, D>(component, {
       disableClose: true,
       width: "40rem",

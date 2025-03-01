@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
-import {JsonPipe, NgIf} from "@angular/common";
+import {NgIf} from "@angular/common";
 import {AuthService} from "../../services/auth-service/auth.service";
 import {RegisterRequest} from "../../models/register-request";
 import {HttpRequestState, httpRequestStates} from "ngx-http-request-state";
 import {ApiResponse} from "../../models/api-response";
 import {UtilityService} from "../../services/utility-service/utility.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {SnackbarType} from "../../modals/snackbar-data";
 
 @Component({
   standalone: true,
@@ -21,7 +22,6 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    JsonPipe,
     NgIf,
     MatProgressSpinnerModule
   ],
@@ -40,6 +40,7 @@ export class SignupComponent {
   constructor(private fb:FormBuilder,
               private authService:AuthService,
               private router:Router,
+              private activatedRoute:ActivatedRoute,
               private utilityService:UtilityService) {
   }
 
@@ -49,10 +50,10 @@ export class SignupComponent {
       .subscribe((response: HttpRequestState<ApiResponse<void>>) => {
         this.signupStatus=response;
         console.log((this.signupStatus.error as any))
-        if(this.signupStatus.error) this.utilityService.openSnackBar((this.signupStatus.error as any)?.error?.message ?? 'Failed to register, please try again',"ok");
+        if(this.signupStatus.error) this.utilityService.openDefaultSnackbar({data:{text:(this.signupStatus.error as any)?.error?.message ?? 'Failed to register, please try again',type:SnackbarType.ERROR}});
         if(!this.signupStatus.value) return;
-        this.utilityService.openSnackBar(this.signupStatus.value.message ?? 'Please check your email',"ok")
-        this.router.navigate(['..','sign-in']);
+        this.utilityService.openDefaultSnackbar({data:{text:this.signupStatus.value.message ?? 'Please check your email',type:SnackbarType.SUCCESS}})
+        this.router.navigate(['..','sign-in'],{relativeTo:this.activatedRoute})
       })
   }
 }

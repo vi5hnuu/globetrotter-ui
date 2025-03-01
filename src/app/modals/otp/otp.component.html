@@ -1,1 +1,15 @@
-<p>otp works!</p>
+<form class="p-8 rounded-md overflow-hidden">
+  <div class="flex items-center gap-4">
+    <mat-form-field *ngFor="let otpBox of otpForm.controls;let idx=index" appearance="outline">
+      <input matInput (input)="onInputChange($event,idx)" type="number" [formControl]="otpBox" placeholder="X">
+    </mat-form-field>
+  </div>
+  <div class="flex items-center justify-end gap-8">
+    <button [disabled]="!otpForm.valid || otpForm.pristine" (click)="handleOtp()" mat-flat-button color="primary">
+      <div class="flex items-center gap-3">
+        Submit
+        <mat-spinner *ngIf="otpSubmitStatus?.isLoading" color="accent" [diameter]="16" class="animate-fade-in"></mat-spinner>
+      </div>
+    </button>
+  </div>
+</form>
