@@ -56,4 +56,8 @@ export class SigninComponent {
         this.router.navigate(['home'])
       })
   }
+
+  redirectToSignUp() {
+    this.router.navigate(['..','sign-up'],{relativeTo:this.activatedRoute});
+  }
 }

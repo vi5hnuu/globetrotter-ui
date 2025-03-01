@@ -32,7 +32,10 @@
       <span matSuffix class="material-symbols-outlined pr-4">tag</span>
     </mat-form-field>
     <div class="flex items-center justify-end gap-8">
-      <button [disabled]="!signupForm.valid || signupForm.pristine" (click)="registerUser()" mat-flat-button color="primary">
+      <button [disabled]="signupStatus?.isLoading" (click)="redirectToSignIn()" mat-flat-button color="primary">
+        Sign-In
+      </button>
+      <button [disabled]="signupStatus?.isLoading || !signupForm.valid || signupForm.pristine" (click)="registerUser()" mat-flat-button color="primary">
         <div class="flex items-center gap-3">
           Register
           <mat-spinner *ngIf="signupStatus?.isLoading" color="accent" [diameter]="16" class="animate-fade-in"></mat-spinner>

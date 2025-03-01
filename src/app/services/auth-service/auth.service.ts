@@ -8,10 +8,11 @@ import {LoginRequest} from "../../models/login-request";
 import {RegisterRequest} from "../../models/register-request";
 import {ResetPasswordRequest} from "../../models/reset-password-request";
 import {HttpRequestState} from "ngx-http-request-state";
+import {tap} from "rxjs";
 
 @Injectable()
 export class AuthService {
-  userInfo?:HttpRequestState<ApiResponse<User>>;
+  userInfo?:HttpRequestState<ApiResponse<User>>|null;
   constructor(private http: HttpClient) {
   }
 
@@ -37,7 +38,8 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.get<ApiResponse<void>>(AuthApi._logout,{withCredentials:true});
+    return this.http.get<ApiResponse<void>>(AuthApi._logout,{withCredentials:true})
+      .pipe(tap(() => this.userInfo=null));
   }
 
   register({register}: { register: RegisterRequest }) {

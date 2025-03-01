@@ -9,6 +9,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {HttpRequestState, httpRequestStates} from "ngx-http-request-state";
 import {ApiResponse} from "../../models/api-response";
 import {SubmissionResult} from "../../models/submission-result";
+import {Router} from "@angular/router";
 // @ts-ignore
 @Component({
   selector: 'gt-home',
@@ -26,7 +27,10 @@ export class HomeComponent {
   selectedOption?:string|null;
   submitStatus?:HttpRequestState<ApiResponse<SubmissionResult>>|null;
 
-  constructor(public placeService:PlacesService,public authService:AuthService) {
+  constructor(
+    public placeService:PlacesService,
+    public router:Router,
+              public authService:AuthService) {
     this.placeService.loadNextPage();
     this.placeService.getScore();
   }
@@ -44,13 +48,23 @@ export class HomeComponent {
         const placeIdx=this.placeService.places.findIndex(place => place.id===res.value!.data!.submission.questionId);
         if(placeIdx<-1) throw Error("Fatal error, this should never happen");
         this.placeService.places[placeIdx].submissionResult=res.value!.data!;
-        setTimeout(()=>{
-          this.submitStatus=null;
-          this.selectedOption=null;
-          this.currentPlaceQuestionIndex++;
-          this.placeService.getScore();
-          if(this.currentPlaceQuestionIndex>=this.placeService.places.length) this.placeService.loadNextPage();
-        },5000);
       })
+  }
+
+  logout() {
+    this.authService.logout()
+      .pipe(httpRequestStates())
+      .subscribe((res)=>{
+        if(res.isLoading) return;
+        this.router.navigate(['auth','sign-in'])
+      });
+  }
+
+  nextQuestion() {
+    this.submitStatus=null;
+    this.selectedOption=null;
+    this.currentPlaceQuestionIndex++;
+    this.placeService.getScore();
+    if(this.currentPlaceQuestionIndex>=this.placeService.places.length) this.placeService.loadNextPage();
   }
 }

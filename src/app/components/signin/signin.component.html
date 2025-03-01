@@ -12,6 +12,9 @@
       <span matSuffix class="material-symbols-outlined pr-4">tag</span>
     </mat-form-field>
     <div class="flex items-center justify-end gap-8">
+      <button [disabled]="signinStatus?.isLoading" (click)="redirectToSignUp()" mat-flat-button color="primary">
+        Sign-up
+      </button>
       <button [disabled]="signinStatus?.isLoading || !signinForm.valid || signinForm.pristine" (click)="login()" mat-flat-button color="primary">
         <div class="flex items-center gap-3">
           Sign-In
