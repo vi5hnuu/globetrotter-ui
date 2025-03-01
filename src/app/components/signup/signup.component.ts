@@ -30,7 +30,7 @@ import {SnackbarType} from "../../modals/snackbar-data";
 export class SignupComponent {
   signupForm=this.fb.group({
     firstName: ['', Validators.required],
-    lastName:[ ''],
+    lastName:[ '',[Validators.required,Validators.minLength(5)]],
     userName: ['', [Validators.required,Validators.minLength(5)]],
     email: ['', [Validators.required,Validators.pattern(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}/)],],
     password: ['', [Validators.required,Validators.minLength(7)]],

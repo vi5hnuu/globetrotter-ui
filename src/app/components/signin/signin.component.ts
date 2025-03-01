@@ -56,7 +56,6 @@ export class SigninComponent {
         this.utilityService.openDefaultSnackbar({data:{text:this.signinStatus.value.message ?? 'logged in successfully',type:SnackbarType.SUCCESS}})
 
         const challengeTo=localStorage.getItem(CHALLENGE_TO);
-        localStorage.removeItem(CHALLENGE_TO);
         if(challengeTo){
           this.router.navigate(['home'],{queryParams:{[CHALLENGE_TO]:challengeTo}})
         }else{

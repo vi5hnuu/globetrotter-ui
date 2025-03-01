@@ -18,15 +18,20 @@ export const AuthGuard = (): CanActivateFn => {
     const authService=inject(AuthService);
     const router=inject(Router);
     const challengeToUsername=route.queryParamMap.get(CHALLENGE_TO);
-    if(challengeToUsername) localStorage.setItem(CHALLENGE_TO,challengeToUsername);
     return new Promise((resolve,reject) => {
       inject(AuthService)
         .getMeInfo()
         .pipe(httpRequestStates(),retry(2))
         .subscribe((response) => {
           authService.userInfo=response;
-          if(response.value) return resolve(true);
-          if(response.error)return resolve(router.navigate(['/auth/sign-in']));
+          if(response.value) {
+            localStorage.removeItem(CHALLENGE_TO)
+            return resolve(true);
+          }
+          if(response.error) {
+            if(challengeToUsername) localStorage.setItem(CHALLENGE_TO,challengeToUsername);
+            return resolve(router.navigate(['/auth/sign-in']))
+          };
         })
     });
   };
