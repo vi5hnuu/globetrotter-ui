@@ -10,7 +10,7 @@ import {ResetPasswordRequest} from "../../models/reset-password-request";
 
 @Injectable()
 export class AuthService {
-
+  userInfo?:ApiResponse<User>;
   constructor(private http: HttpClient) {
   }
 
