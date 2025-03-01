@@ -4,10 +4,12 @@ import {AuthComponent} from "./components/auth/auth.component";
 import {SignupComponent} from "./components/signup/signup.component";
 import {SigninComponent} from "./components/signin/signin.component";
 import {AppComponent} from "./app.component";
+import {AuthGuard} from "./guards/auth.guard";
+import {HomeComponent} from "./components/home/home.component";
 
 const routes: Routes = [
   {path:'',pathMatch:'full',redirectTo:'auth'},
-  {path:'home',component:AppComponent},
+  {path:'home',canActivate: [AuthGuard()],component:HomeComponent},
   {path:'auth',
     component:AuthComponent,
     children:[

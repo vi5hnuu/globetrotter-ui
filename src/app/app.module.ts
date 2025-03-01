@@ -10,6 +10,13 @@ import {UtilityService} from "./services/utility-service/utility.service";
 import {HttpClientModule} from "@angular/common/http";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+
+import player from 'lottie-web';
+import {LottieModule} from "ngx-lottie";
+export function playerFactory() {
+  return player;
+}
 
 @NgModule({
   declarations: [
@@ -22,7 +29,9 @@ import {MatDialogModule} from "@angular/material/dialog";
     RouterModule,
     HttpClientModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    LottieModule.forRoot({player: playerFactory})
   ],
   providers: [AuthService,UtilityService],
   bootstrap: [AppComponent]

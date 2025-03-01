@@ -22,6 +22,7 @@
     "@angular/router": "^16.2.0",
     "@dicebear/avataaars": "^9.2.2",
     "ngx-http-request-state": "^3.5.0",
+    "ngx-lottie": "^10.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

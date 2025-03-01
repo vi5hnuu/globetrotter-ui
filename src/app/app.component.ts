@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AvatarComponent} from "./components/avatar/avatar.component";
+import {AuthService} from "./services/auth-service/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,6 @@ import {AvatarComponent} from "./components/avatar/avatar.component";
 })
 export class AppComponent {
   title = 'globetrotter';
+
+  constructor(public authService:AuthService) {}
 }

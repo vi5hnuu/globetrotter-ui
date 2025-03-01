@@ -1,12 +1,27 @@
 <div class="h-screen w-screen flex flex-col gap-8 items-center justify-center overflow-auto p-16 bg-green-50">
   <div class="flex flex-col justify-center items-center gap-8">
-    <gt-avatar class="flex rounded-full size-32 overflow-hidden"></gt-avatar>
-    <p class="font-mono text-lg font-bold">{{authService.userInfo?.value?.data?.firstName}}</p>
+    <div class="relative">
+      <gt-avatar class="flex rounded-full size-32 overflow-hidden"></gt-avatar>
+      <div class="absolute -right-5 top-0 aspect-square size-12 flex items-center justify-center bg-gray-800 p-4 rounded-full">
+        <mat-spinner *ngIf="placeService.scoreStatus?.isLoading" [diameter]="16"></mat-spinner>
+        <span class="text-white" *ngIf="placeService.scoreStatus?.value as scoreInfo">{{scoreInfo.data!}}</span>
+      </div>
+    </div>
+    <div class="flex flex-col items-center">
+      <p class="font-mono text-lg font-bold">{{authService.userInfo?.value?.data?.firstName}}</p>
+      <p class="font-mono text-lg font-bold">@{{authService.userInfo?.value?.data?.username}}</p>
+    </div>
   </div>
   <div *ngIf="placeService.isLoading">
     <mat-spinner></mat-spinner>
   </div>
-  <div *ngIf="placeService.isError">Failed to load</div>
+  <div *ngIf="placeService.isError" class="flex items-center gap-2" (click)="placeService.loadNextPage()">
+    <span>Failed to load</span>
+    <span class="material-symbols-outlined">replay</span>
+  </div>
+  <div *ngIf="!placeService.isLoading && !placeService.isError && currentPlaceQuestionIndex+1===placeService.places.length">
+    That's the end of quizs
+  </div>
   <div class="flex flex-col items-center fap-4">
     <div *ngIf="placeService.places[currentPlaceQuestionIndex] as place">
       <p class="text-center">{{ place.alias }}</p>
@@ -16,20 +31,27 @@
           <li *ngFor="let clue of place.clues" class="font-sans text-md">- {{ clue }}</li>
         </ul>
       </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div (click)="selectedOption===option ? selectedOption=null : selectedOption=option"
-             *ngFor="let option of place.options"
-        class="hover:bg-green-300 bg-green-100 gap-4 transition-all flex items-center justify-center p-4 rounded-md shadow-md">
-          <span class="flex-1">{{ option }}</span>
-          <span *ngIf="selectedOption===option" class="material-symbols-outlined">check_box</span>
-          <span *ngIf="selectedOption!==option" class="material-symbols-outlined">check_box_outline_blank</span>
+    <!--  options    -->
+      <div class="flex flex-col gap-1">
+        <div class="grid grid-cols-2 gap-4">
+          <div (click)="selectedOption===option ? selectedOption=null : selectedOption=option"
+               *ngFor="let option of place.options"
+               class="hover:bg-green-300 bg-green-100 gap-4 transition-all flex items-center justify-center p-4 rounded-md shadow-md">
+            <span class="flex-1">{{ option }}</span>
+            <span *ngIf="selectedOption===option" class="material-symbols-outlined">check_box</span>
+            <span *ngIf="selectedOption!==option" class="material-symbols-outlined">check_box_outline_blank</span>
+          </div>
+        </div>
+        <div *ngIf="place.submissionResult?.submission" class="flex p-4 pl-0 items-center gap-2">
+          <p class="material-symbols-outlined">update</p>
+          <p>Last Solved on : {{place.submissionResult!.submission!.updatedAt|date:'d MMM y'}}</p>
         </div>
       </div>
       <div class="pt-8 items-end w-fit ml-auto">
-        <button (click)="submitAns(place.id,selectedOption!)" [disabled]="placeService.submitStatus?.isLoading || placeService.submitStatus?.value || !selectedOption" mat-flat-button
+        <button (click)="submitAns(place.id,selectedOption!)" [disabled]="submitStatus?.isLoading || submitStatus?.value || !selectedOption" mat-flat-button
                 color="primary">Submit</button>
       </div>
-      <ng-container *ngIf="placeService.submitStatus?.value">
+      <ng-container *ngIf="submitStatus?.value">
         <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  p-12 overflow-hidden  flex flex-col gap-8">
           <ng-lottie
             containerClass="moving-box another-class"

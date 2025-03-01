@@ -7,36 +7,37 @@ import {UpdatePassword} from "../../models/update-password";
 import {LoginRequest} from "../../models/login-request";
 import {RegisterRequest} from "../../models/register-request";
 import {ResetPasswordRequest} from "../../models/reset-password-request";
+import {HttpRequestState} from "ngx-http-request-state";
 
 @Injectable()
 export class AuthService {
-  userInfo?:ApiResponse<User>;
+  userInfo?:HttpRequestState<ApiResponse<User>>;
   constructor(private http: HttpClient) {
   }
 
 
   getMeInfo() {
-    return this.http.get<ApiResponse<User>>(AuthApi._getMeInfo);
+    return this.http.get<ApiResponse<User>>(AuthApi._getMeInfo,{withCredentials:true});
   }
 
   deleteMe() {
-    return this.http.delete<ApiResponse<void>>(AuthApi._deleteMe);
+    return this.http.delete<ApiResponse<void>>(AuthApi._deleteMe,{withCredentials:true});
   }
 
   updatePasswordInit({usernameEmail}: { usernameEmail: string }) {
-    return this.http.post<ApiResponse<void>>(AuthApi._updatePasswordInit, {'usernameEmail': usernameEmail})
+    return this.http.post<ApiResponse<void>>(AuthApi._updatePasswordInit, {'usernameEmail': usernameEmail},{withCredentials:true})
   }
 
   updatePasswordComplete({updatePassword}: { updatePassword: UpdatePassword }) {
-    return this.http.patch<ApiResponse<void>>(AuthApi._updatePasswordComplete, updatePassword)
+    return this.http.patch<ApiResponse<void>>(AuthApi._updatePasswordComplete, updatePassword,{withCredentials:true})
   }
 
   login({login}: { login: LoginRequest }) {
-    return this.http.post<ApiResponse<User>>(AuthApi._login, login)
+    return this.http.post<ApiResponse<User>>(AuthApi._login, login,{withCredentials:true})
   }
 
   logout() {
-    return this.http.get<ApiResponse<void>>(AuthApi._logout);
+    return this.http.get<ApiResponse<void>>(AuthApi._logout,{withCredentials:true});
   }
 
   register({register}: { register: RegisterRequest }) {
@@ -52,6 +53,6 @@ export class AuthService {
   }
 
   resetPassword({resetPassword}: { resetPassword: ResetPasswordRequest }) {
-    return this.http.post<ApiResponse<void>>(AuthApi._resetPassword, resetPassword)
+    return this.http.post<ApiResponse<void>>(AuthApi._resetPassword, resetPassword,{withCredentials:true})
   }
 }

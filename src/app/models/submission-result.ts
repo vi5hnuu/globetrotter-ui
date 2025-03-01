@@ -1,9 +1,6 @@
-export interface Submission {
-  id: string;
-  userId: string;
-  questionId: string;
-  choice: string;
-  wasCorrect: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+import {Submission} from "./submission";
+
+export interface SubmissionResult {
+  submission:Submission;
+  funFacts?:string[];
 }
