@@ -12,6 +12,7 @@ import {UtilityService} from "../../services/utility-service/utility.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {SnackbarType} from "../../modals/snackbar-data";
+import {AvatarComponent} from "../avatar/avatar.component";
 
 @Component({
   standalone: true,
@@ -23,7 +24,8 @@ import {SnackbarType} from "../../modals/snackbar-data";
     MatButtonModule,
     ReactiveFormsModule,
     NgIf,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    AvatarComponent
   ],
   styleUrls: ['./signup.component.scss']
 })

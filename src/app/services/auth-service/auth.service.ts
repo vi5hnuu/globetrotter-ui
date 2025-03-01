@@ -47,7 +47,7 @@ export class AuthService {
   }
 
   reVerify({email}: { email: string }) {
-    return this.http.post<ApiResponse<void>>(`${AuthApi._reVerify}?email=${email}`, email)
+    return this.http.get<ApiResponse<void>>(`${AuthApi._reVerify}?email=${email}`)
   }
 
   forgotPassword({usernameEmail}: { usernameEmail: string }) {

@@ -6,6 +6,7 @@ import {SigninComponent} from "./components/signin/signin.component";
 import {AppComponent} from "./app.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {HomeComponent} from "./components/home/home.component";
+import {ReVerifyComponent} from "./components/re-verify/re-verify.component";
 
 const routes: Routes = [
   {path:'',pathMatch:'full',redirectTo:'auth'},
@@ -15,7 +16,8 @@ const routes: Routes = [
     children:[
       {path:'',pathMatch:'prefix',redirectTo:'sign-up'},
       {path:'sign-up',component:SignupComponent},
-      {path:'sign-in',component:SigninComponent}
+      {path:'sign-in',component:SigninComponent},
+      {path:'re-verify',component:ReVerifyComponent}
     ]}
 ];
 

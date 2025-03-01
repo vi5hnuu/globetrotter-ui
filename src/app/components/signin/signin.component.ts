@@ -16,20 +16,22 @@ import {SnackbarType} from "../../modals/snackbar-data";
 import {User} from "../../models/user/user";
 import {LoginRequest} from "../../models/login-request";
 import {CHALLENGE_TO} from "../../models/common-consts";
+import {AvatarComponent} from "../avatar/avatar.component";
 
 @Component({
     standalone: true,
     selector: 'gt-signin',
     templateUrl: './signin.component.html',
-    imports: [
-        MatButtonModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatProgressSpinnerModule,
-        NgIf,
-        ReactiveFormsModule
-    ],
+  imports: [
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    NgIf,
+    ReactiveFormsModule,
+    AvatarComponent
+  ],
     styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent {
@@ -66,5 +68,9 @@ export class SigninComponent {
 
   redirectToSignUp() {
     this.router.navigate(['..','sign-up'],{relativeTo:this.activatedRoute});
+  }
+
+  onReVerify() {
+    this.router.navigate(['..','re-verify'],{relativeTo:this.activatedRoute});
   }
 }

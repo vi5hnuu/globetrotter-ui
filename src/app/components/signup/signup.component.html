@@ -1,6 +1,7 @@
-<mat-card class="p-8 rounded-md overflow-hidden">
+<mat-card class="p-8 flex items-center justify-center gap-8 rounded-md overflow-hidden">
+  <gt-avatar seed="dummy" class="flex rounded-full size-16 md:size-24 overflow-hidden shrink-0"></gt-avatar>
   <form [formGroup]="signupForm" class="flex flex-col">
-    <div class="flex items-center gap-4">
+    <div class="flex items-center flex-col md:flex-row md:gap-4">
       <mat-form-field  appearance="outline">
         <mat-label>First name</mat-label>
         <input formControlName="firstName" matInput placeholder="vishnu kumar">
