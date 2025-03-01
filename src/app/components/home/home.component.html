@@ -1,0 +1,48 @@
+<div class="h-screen w-screen flex flex-col gap-8 items-center justify-center overflow-auto p-16 bg-green-50">
+  <div class="flex flex-col justify-center items-center gap-8">
+    <gt-avatar class="flex rounded-full size-32 overflow-hidden"></gt-avatar>
+    <p class="font-mono text-lg font-bold">{{authService.userInfo?.value?.data?.firstName}}</p>
+  </div>
+  <div *ngIf="placeService.isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div *ngIf="placeService.isError">Failed to load</div>
+  <div class="flex flex-col items-center fap-4">
+    <div *ngIf="placeService.places[currentPlaceQuestionIndex] as place">
+      <p class="text-center">{{ place.alias }}</p>
+      <div class="flex flex-col mb-6">
+        <p class="text-lg font-mono">Clues :</p>
+        <ul class="flex flex-col gap-2">
+          <li *ngFor="let clue of place.clues" class="font-sans text-md">- {{ clue }}</li>
+        </ul>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div (click)="selectedOption===option ? selectedOption=null : selectedOption=option"
+             *ngFor="let option of place.options"
+        class="hover:bg-green-300 bg-green-100 gap-4 transition-all flex items-center justify-center p-4 rounded-md shadow-md">
+          <span class="flex-1">{{ option }}</span>
+          <span *ngIf="selectedOption===option" class="material-symbols-outlined">check_box</span>
+          <span *ngIf="selectedOption!==option" class="material-symbols-outlined">check_box_outline_blank</span>
+        </div>
+      </div>
+      <div class="pt-8 items-end w-fit ml-auto">
+        <button (click)="submitAns(place.id,selectedOption!)" [disabled]="placeService.submitStatus?.isLoading || placeService.submitStatus?.value || !selectedOption" mat-flat-button
+                color="primary">Submit</button>
+      </div>
+      <ng-container *ngIf="placeService.submitStatus?.value">
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  p-12 overflow-hidden  flex flex-col gap-8">
+          <ng-lottie
+            containerClass="moving-box another-class"
+            [options]="{
+              path: place.submissionResult?.submission?.wasCorrect ? '/assets/lottie/correct.json':'/assets/lottie/wrong.json'
+            }"
+          />
+          <ul class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  min-w-[35%] max-w-[70%] bg-black/75 rounded-md p-8 list-disc flex flex-col gap-2" *ngIf="place.submissionResult?.funFacts as facts">
+            <li *ngFor="let funFact of facts" class="text-white">{{ funFact }}</li>
+          </ul>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+</div>
