@@ -24,6 +24,7 @@ import {
 } from "rxjs";
 import {Submission} from "../../models/submission";
 import {SubmissionResult} from "../../models/submission-result";
+import {ScoreCard} from "../../models/score-card";
 
 interface PlaceConfig{
   pageSize:number,
@@ -41,7 +42,7 @@ export class PlacesService implements OnDestroy{
     places:[],
     loadNext$:new Subject(),
   }
-  scoreStatus?:HttpRequestState<ApiResponse<number>>;
+  scoreStatus?:HttpRequestState<ApiResponse<ScoreCard>>;
 
   get places(){
     return this.placeConfig.places;
@@ -99,7 +100,7 @@ export class PlacesService implements OnDestroy{
   }
 
   getScore() {
-    return this.http.get<ApiResponse<number>>(PlacesApi._score,{withCredentials:true})
+    return this.http.get<ApiResponse<ScoreCard>>(PlacesApi._score,{withCredentials:true})
       .pipe(httpRequestStates())
       .subscribe((res)=>this.scoreStatus=res);
   }
