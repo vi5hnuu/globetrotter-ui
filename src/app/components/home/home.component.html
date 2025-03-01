@@ -89,8 +89,16 @@
           <p>Last Solved on : {{place.submissionResult!.submission!.updatedAt|date:'d MMM y'}}</p>
         </div>
       </div>
-      <div class="items-end w-fit ml-auto">
-        <button (click)="submitAns(place.id,selectedOption!)" [disabled]="submitStatus?.isLoading || submitStatus?.value || !selectedOption" mat-flat-button
+      <div class="flex items-center w-full gap-6 justify-between">
+        <ng-container *ngIf="placeService.scoreStatus?.value?.data as scoreInfo">
+          <button *ngIf="(scoreInfo.correct ?? 0)>0 || (scoreInfo.wrong ?? 0)>0" (click)="resetGame()"
+                  [disabled]="resetStatus?.isLoading || submitStatus?.isLoading"
+                  mat-stroked-button
+                  color="primary">Play Again</button>
+
+        </ng-container>
+        <button class="ml-auto"
+                (click)="submitAns(place.id,selectedOption!)" [disabled]="resetStatus?.isLoading || submitStatus?.isLoading || submitStatus?.value || !selectedOption" mat-flat-button
                 color="primary">Submit</button>
       </div>
       <ng-container *ngIf="submitStatus?.value">

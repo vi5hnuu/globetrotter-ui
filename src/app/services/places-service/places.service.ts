@@ -107,6 +107,10 @@ export class PlacesService implements OnDestroy{
     return this.http.get<ApiResponse<SubmissionResult>>(url,{withCredentials:true});
   }
 
+  resetGame(){
+    return this.http.post<ApiResponse<ScoreCard>>(PlacesApi._reset,null,{withCredentials:true});
+  }
+
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }

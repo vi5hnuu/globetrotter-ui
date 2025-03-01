@@ -12,6 +12,7 @@ import {SubmissionResult} from "../../models/submission-result";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {CHALLENGE_TO} from "../../models/common-consts";
+import {ScoreCard} from "../../models/score-card";
 
 // @ts-ignore
 @Component({
@@ -32,6 +33,7 @@ export class HomeComponent implements OnDestroy{
   submitStatus?: HttpRequestState<ApiResponse<SubmissionResult>> | null;
   challengeToUsername?: string|null;
   _opponentScoreInterval?:any;
+  resetStatus?:HttpRequestState<ApiResponse<ScoreCard>>;
 
   constructor(
     public placeService: PlacesService,
@@ -65,6 +67,17 @@ export class HomeComponent implements OnDestroy{
         const placeIdx = this.placeService.places.findIndex(place => place.id === res.value!.data!.submission.questionId);
         if (placeIdx < -1) throw Error("Fatal error, this should never happen");
         this.placeService.places[placeIdx].submissionResult = res.value!.data!;
+      })
+  }
+
+  resetGame(){
+    this.placeService.resetGame()
+      .pipe(httpRequestStates())
+      .subscribe((res) => {
+        this.resetStatus=res;
+        if(!res.value) return;
+        window.location.href=this.router.url;
+        // this.router.navigate(['.'],{relativeTo:this.activatedRoute});
       })
   }
 
