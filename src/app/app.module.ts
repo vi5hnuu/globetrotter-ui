@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {RouterModule} from "@angular/router";
+import {ActivatedRouteSnapshot, RouterModule} from "@angular/router";
 import {AuthService} from "./services/auth-service/auth.service";
 import {UtilityService} from "./services/utility-service/utility.service";
 import {HttpClientModule} from "@angular/common/http";
@@ -31,7 +31,7 @@ export function playerFactory() {
     MatSnackBarModule,
     MatDialogModule,
     MatProgressSpinnerModule,
-    LottieModule.forRoot({player: playerFactory})
+    LottieModule.forRoot({player: playerFactory}),
   ],
   providers: [AuthService,UtilityService],
   bootstrap: [AppComponent]

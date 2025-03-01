@@ -15,6 +15,7 @@ import {RegisterRequest} from "../../models/register-request";
 import {SnackbarType} from "../../modals/snackbar-data";
 import {User} from "../../models/user/user";
 import {LoginRequest} from "../../models/login-request";
+import {CHALLENGE_TO} from "../../models/common-consts";
 
 @Component({
     standalone: true,
@@ -53,8 +54,15 @@ export class SigninComponent {
         if(this.signinStatus.error) this.utilityService.openDefaultSnackbar({data:{text:(this.signinStatus.error as any)?.error?.message ?? 'Failed to login, please try again',type:SnackbarType.ERROR}});
         if(!this.signinStatus.value) return;
         this.utilityService.openDefaultSnackbar({data:{text:this.signinStatus.value.message ?? 'logged in successfully',type:SnackbarType.SUCCESS}})
-        this.router.navigate(['home'])
-      })
+
+        const challengeTo=localStorage.getItem(CHALLENGE_TO);
+        localStorage.removeItem(CHALLENGE_TO);
+        if(challengeTo){
+          this.router.navigate(['home'],{queryParams:{[CHALLENGE_TO]:challengeTo}})
+        }else{
+          this.router.navigate(['home'])
+        }
+      });
   }
 
   redirectToSignUp() {

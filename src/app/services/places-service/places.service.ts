@@ -1,30 +1,15 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ApiResponse} from "../../models/api-response";
-import {User} from "../../models/user/user";
-import {AuthApi} from "../auth-api";
-import {UpdatePassword} from "../../models/update-password";
-import {LoginRequest} from "../../models/login-request";
-import {RegisterRequest} from "../../models/register-request";
-import {ResetPasswordRequest} from "../../models/reset-password-request";
 import {HttpRequestState, httpRequestStates} from "ngx-http-request-state";
 import {Place} from "../../models/place";
 import {Pageable} from "../../models/pageable";
 import {PlacesApi} from "../places-api";
-import {
-  BehaviorSubject,
-  catchError,
-  debounce,
-  debounceTime, EMPTY,
-  filter, startWith,
-  Subject,
-  Subscription,
-  switchMap,
-  take, tap
-} from "rxjs";
-import {Submission} from "../../models/submission";
+import {catchError, debounceTime, EMPTY, filter, startWith, Subject, Subscription, switchMap, take, tap} from "rxjs";
 import {SubmissionResult} from "../../models/submission-result";
 import {ScoreCard} from "../../models/score-card";
+import {UtilityService} from "../utility-service/utility.service";
+import {SnackbarType} from "../../modals/snackbar-data";
 
 interface PlaceConfig{
   pageSize:number,
@@ -43,6 +28,7 @@ export class PlacesService implements OnDestroy{
     loadNext$:new Subject(),
   }
   scoreStatus?:HttpRequestState<ApiResponse<ScoreCard>>;
+  opponentScoreStatus?:HttpRequestState<ApiResponse<ScoreCard>>;
 
   get places(){
     return this.placeConfig.places;
@@ -61,7 +47,7 @@ export class PlacesService implements OnDestroy{
     this.placeConfig.loadNext$.subscribe(()=>console.log('loading'))
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private  utilityService:UtilityService) {
     this.init();
   }
 
@@ -99,10 +85,20 @@ export class PlacesService implements OnDestroy{
     return this.http.get<ApiResponse<Pageable<Place>>>(url,{withCredentials:true})
   }
 
-  getScore() {
+  getMyScore() {
     return this.http.get<ApiResponse<ScoreCard>>(PlacesApi._score,{withCredentials:true})
       .pipe(httpRequestStates())
       .subscribe((res)=>this.scoreStatus=res);
+  }
+
+  getOpponentScore(username:string) {
+    return this.http.get<ApiResponse<ScoreCard>>(`${PlacesApi._score}/${username}`,{withCredentials:true})
+      .pipe(httpRequestStates())
+      .subscribe((res)=>{
+        this.opponentScoreStatus=res;
+        if(res.error)
+          this.utilityService.openDefaultSnackbar({data:{text:(res.error as any)?.error?.message ?? 'something went wrong',type:SnackbarType.ERROR}})
+      });
   }
 
 
