@@ -67,7 +67,7 @@ export class PlacesService implements OnDestroy{
             return EMPTY;
           }))
         .subscribe((res)=>{
-          this.placeConfig={...this.placeConfig,places:this.placeConfig.places.concat(res.data!.data),totalItems:res.data!.totalItems,httpState:undefined}
+          this.placeConfig={...this.placeConfig,places:this.placeConfig.places.concat(this.utilityService.shuffleArray(res.data!.data)),totalItems:res.data!.totalItems,httpState:undefined}
         }));
     });
   }

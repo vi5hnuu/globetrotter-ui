@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   standalone:true,
@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./avatar.component.scss']
 })
 export class AvatarComponent {
-
+  @Input() seed: string='Felix';
 }
