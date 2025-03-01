@@ -31,7 +31,7 @@
     <div class="relative flex flex-col items-center justify-center gap-4">
       <div class="relative">
         <gt-avatar class="flex rounded-full size-32 overflow-hidden"></gt-avatar>
-        <span (click)="shareOnWhatsApp()" class="material-symbols-outlined flex items-center justify-center rounded-full bg-black/75 hover:bg-black/50 transition-all cursor-pointer p-2 absolute right-0 top-0">share</span>
+        <span (click)="shareOnWhatsApp()" class="material-symbols-outlined text-white flex items-center justify-center rounded-full bg-black/75 hover:bg-black/50 transition-all cursor-pointer p-2 absolute right-0 top-0">share</span>
       </div>
       <div class="flex items-center gap-4 w-28 md:w-32 h-8 md:h-12 justify-center bg-gray-800 p-4 rounded-full">
         <mat-spinner *ngIf="placeService.scoreStatus?.isLoading" class="animate-fade-in " [diameter]="16"></mat-spinner>
