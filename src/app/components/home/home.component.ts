@@ -100,7 +100,7 @@ export class HomeComponent implements OnDestroy{
   }
 
   shareOnWhatsApp() {
-    const cleanUrl = `${window.location.origin}${window.location.pathname}?${CHALLENGE_TO}=${this.authService.userInfo!.value!.data!.username}`;
+    const cleanUrl = `${window.location.origin}${window.location.pathname}/#/home?${CHALLENGE_TO}=${this.authService.userInfo!.value!.data!.username}`;
     const url = encodeURIComponent(cleanUrl);
     const text = encodeURIComponent('Hey, check out this link:');
     window.open(`https://wa.me/?text=${text} ${url}`, '_blank');
