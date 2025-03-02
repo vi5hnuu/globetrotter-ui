@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 import {PlacesService} from "../../services/places-service/places.service";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {AnimationLoader, LottieCacheModule, LottieComponent, LottieModule, provideLottieOptions} from "ngx-lottie";
@@ -38,6 +38,7 @@ export class HomeComponent implements OnDestroy{
   constructor(
     public placeService: PlacesService,
     public router: Router,
+    public location:Location,
     public activatedRoute:ActivatedRoute,
     public authService: AuthService) {
     this.placeService.loadNextPage();
@@ -76,7 +77,7 @@ export class HomeComponent implements OnDestroy{
       .subscribe((res) => {
         this.resetStatus=res;
         if(!res.value) return;
-        window.location.href=window.location.href;
+        window.location.href = this.location.path(true);
         // this.router.navigate(['.'],{relativeTo:this.activatedRoute});
       })
   }
