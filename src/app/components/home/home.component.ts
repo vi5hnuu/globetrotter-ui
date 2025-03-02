@@ -76,7 +76,7 @@ export class HomeComponent implements OnDestroy{
       .subscribe((res) => {
         this.resetStatus=res;
         if(!res.value) return;
-        window.location.href=this.router.url;
+        window.location.href=window.location.href;
         // this.router.navigate(['.'],{relativeTo:this.activatedRoute});
       })
   }
