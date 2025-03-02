@@ -9,7 +9,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {HttpRequestState, httpRequestStates} from "ngx-http-request-state";
 import {ApiResponse} from "../../models/api-response";
 import {SubmissionResult} from "../../models/submission-result";
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {CHALLENGE_TO} from "../../models/common-consts";
 import {ScoreCard} from "../../models/score-card";
