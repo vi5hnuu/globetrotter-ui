@@ -114,4 +114,9 @@ export class PlacesService implements OnDestroy{
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
+
+  resetPlaces() {
+    this.placeConfig={...this.placeConfig,places:[],totalItems:undefined,httpState:undefined};
+    this.loadNextPage();
+  }
 }

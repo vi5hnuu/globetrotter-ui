@@ -77,9 +77,9 @@ export class HomeComponent implements OnDestroy{
       .subscribe((res) => {
         this.resetStatus=res;
         if(!res.value) return;
-        this.challengeToUsername && localStorage.setItem(CHALLENGE_TO,this.challengeToUsername);
-        this.router.navigate(['.'],{relativeTo:this.activatedRoute,replaceUrl:true,onSameUrlNavigation:'reload'});
-      })
+        this.placeService.resetPlaces();
+        this.placeService.getMyScore();
+      });
   }
 
   logout() {
