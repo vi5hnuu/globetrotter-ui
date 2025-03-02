@@ -9,7 +9,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {HttpRequestState, httpRequestStates} from "ngx-http-request-state";
 import {ApiResponse} from "../../models/api-response";
 import {SubmissionResult} from "../../models/submission-result";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {CHALLENGE_TO} from "../../models/common-consts";
 import {ScoreCard} from "../../models/score-card";
@@ -77,8 +77,8 @@ export class HomeComponent implements OnDestroy{
       .subscribe((res) => {
         this.resetStatus=res;
         if(!res.value) return;
-        window.location.href = this.location.path(true);
-        // this.router.navigate(['.'],{relativeTo:this.activatedRoute});
+        this.challengeToUsername && localStorage.setItem(CHALLENGE_TO,this.challengeToUsername);
+        this.router.navigate(['.'],{relativeTo:this.activatedRoute,replaceUrl:true,onSameUrlNavigation:'reload'});
       })
   }
 
